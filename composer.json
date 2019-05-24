@@ -1,0 +1,28 @@
+{
+    "name": "artem/templater",
+    "description": "My realization for translation package template mechanism",
+    "type": "library",
+    "require": {
+        "php": ">=7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~7.0"
+    },
+    "authors": [
+        {
+            "name": "Artem Tsyganov",
+            "email": "ontroip@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Elrond\\Translation\\Utils\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Elrond\\Translation\\Tests\\": "tests/"
+        }
+    }
+}
