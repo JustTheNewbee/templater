@@ -4,39 +4,28 @@ declare(strict_types=1);
 namespace Elrond\Translation\Utils\Templater\FilterHandlers;
 
 use Elrond\Translation\Utils\Domain\Contracts\FilterHandlerInterface;
+use Elrond\Translation\Utils\Domain\Contracts\ParserInterface;
 
 class PluralFilterHandler implements FilterHandlerInterface
 {
-    public const FILTER_NAME = 'pluralize';
+    /**
+     * @var string|null
+     */
+    protected $pluralMask;
 
     /**
-     * @var array
+     * @var ParserInterface
      */
-    protected $args;
+    protected $maskParser;
 
-    /**
-     * @param array $args
-     */
-    public function setArgs(array $args): void
-    {
-        $this->args = $args;
-    }
-
-    /**
-     * @param $value
-     * @return mixed|void
-     */
-    public function filter($value): string
+    public function filter($value)
     {
         // TODO: Implement filter() method.
     }
 
-    /**
-     * @return string
-     */
-    public function getFilterName(): string
+    public function setArgs(array $args): void
     {
-        return self::FILTER_NAME;
+        $this->pluralMask = $args[0] ?? null;
     }
 
 }

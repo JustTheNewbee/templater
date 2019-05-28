@@ -6,18 +6,14 @@ namespace Elrond\Translation\Utils\Domain\Contracts;
 interface FilterHandlerInterface
 {
     /**
-     * @param array $args
-     */
-    public function setArgs(array $args): void;
-
-    /**
      * @param $value
      * @return mixed
      */
     public function filter($value);
 
     /**
-     * @return string
+     * @param array$args
+     * @return void
      */
-    public function getFilterName(): string;
+    public function setArgs(array $args): void;
 }

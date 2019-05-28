@@ -18,8 +18,9 @@ class TextParser implements ParserInterface
      * TextParser constructor.
      * @param ParserInterface $templateParser
      */
-    public function __construct(ParserInterface $templateParser)
-    {
+    public function __construct(
+        ParserInterface $templateParser
+    ) {
         $this->templateParser = $templateParser;
     }
 

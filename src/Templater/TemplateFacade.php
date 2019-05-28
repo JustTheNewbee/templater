@@ -5,6 +5,8 @@ namespace Elrond\Translation\Utils\Templater;
 
 use Elrond\Translation\Utils\Domain\Contracts\FilterHandlerInterface;
 use Elrond\Translation\Utils\Domain\Contracts\ParserInterface;
+use Elrond\Translation\Utils\Templater\Interpreters\TemplateContext;
+use Elrond\Translation\Utils\Templater\Interpreters\TemplateExpressionInterface;
 
 class TemplateFacade
 {
@@ -13,18 +15,39 @@ class TemplateFacade
      */
     protected $parser;
 
-
+    /**
+     * @var TemplateContext
+     */
+    protected $templateContext;
 
     /**
-     * @var array
+     * TemplateFacade constructor.
+     * @param ParserInterface $parser
+     * @param TemplateContext $templateContext
      */
-    protected $filterHandlers = [];
+    public function __construct(
+        ParserInterface $parser,
+        TemplateContext $templateContext
+    ) {
+        $this->parser = $parser;
+        $this->templateContext = $templateContext;
+    }
 
     /**
-     * @param FilterHandlerInterface $filterHandler
+     * @param string $rawText
+     * @param array $replacements
+     * @return string
      */
-    public function addFilterHandler(FilterHandlerInterface $filterHandler): void
+    public function replaceTemplates(string $rawText, array $replacements): string
     {
-        $this->filterHandlers[$filterHandler->getFilterName()] = $filterHandler;
+        $this->templateContext->setReplacements($replacements);
+
+        $templates = $this->parser->parse($rawText);
+
+        array_walk($templates, static function (TemplateExpressionInterface &$expression) {
+            $expression = $expression->interpret($this->templateContext);
+        });
+
+        return strtr($rawText, $templates);
     }
 }
